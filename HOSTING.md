@@ -3,7 +3,14 @@
 Die Daten liegen schon in eurer eigenen Supabase-Datenbank (`okgvubkibtkgcofkdpsd`), nicht bei ChatGPT.
 Online gehen muss nur der Ordner `dist/`.
 
-## Netlify Drop (gratis, ohne Git)
+## GitHub Pages (gratis)
+
+1. Auf github.com ein neues, leeres, öffentliches Repository `all-in-poker` anlegen (ohne README).
+2. Dieses Projekt dorthin pushen: `git remote add origin https://github.com/f-oedl/all-in-poker.git` und `git push -u origin main`.
+3. Im Repo: Settings → Pages → Source: „GitHub Actions“.
+4. Nach ca. 1 Minute ist die Seite unter `https://f-oedl.github.io/all-in-poker/` online. Jeder weitere Push aktualisiert sie automatisch.
+
+## Alternative: Netlify Drop (gratis, ohne Git)
 
 1. https://app.netlify.com/drop öffnen und kostenlos anmelden.
 2. Den Ordner `dist/` aus diesem Projekt auf die Seite ziehen.
