@@ -1,0 +1,12 @@
+{
+  "name": "all-in-poker-club-export",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node --check dist/assets/app.js && node tests/club-core.cjs && node tests/original-achievements.cjs && node tests/preview-guard.cjs",
+    "icons": "node scripts/create-club-icons.cjs"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.34.0"
+  }
+}

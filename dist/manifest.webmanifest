@@ -1,0 +1,27 @@
+{
+  "id": "./",
+  "name": "All In — Poker Club",
+  "short_name": "All In",
+  "description": "Eure private Pokerrunde. Sessions, Ergebnisse und Turniere.",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#111318",
+  "theme_color": "#111318",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "icons/club-mark-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/club-mark-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

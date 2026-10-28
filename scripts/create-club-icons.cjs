@@ -1,0 +1,2 @@
+const sharp=require('sharp');
+(async()=>{const mark=await sharp('dist/assets/club-mark-source.png').trim().png().toBuffer();await sharp(mark).resize({width:256,height:256,fit:'inside'}).toFile('dist/assets/club-mark.png');for(const size of [32,180,192,512]){const inset=Math.round(size*.67);const foreground=await sharp(mark).resize(inset,inset,{fit:'inside'}).toBuffer();await sharp({create:{width:size,height:size,channels:4,background:'#f2f4f8'}}).composite([{input:foreground,gravity:'center'}]).png().toFile(`dist/icons/club-mark-${size}.png`);}})();
