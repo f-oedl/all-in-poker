@@ -1,0 +1,63 @@
+/* Phone polish: entrance choreography, touch feedback, glass header, sliding sheets.
+   Animations only use fill-mode "backwards" and end on transform:none, so no element keeps a
+   transform afterwards (a lingering transform would trap position:fixed sheets and dialogs). */
+html{-webkit-tap-highlight-color:transparent}
+.club-app button,.club-app select,.club-app input{touch-action:manipulation}
+
+@media(max-width:767px){
+  /* Glass header that tightens once the page scrolls. */
+  .native-club .club-header{position:sticky;top:0;z-index:640;transition:background-color .3s,box-shadow .3s,height .3s}
+  html.is-scrolled .native-club .club-header{background:#f2f4f8d1;-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);box-shadow:0 1px 0 #263b6414;height:calc(64px + env(safe-area-inset-top))}
+  html.is-scrolled .native-club .club-header img{transition:transform .3s}
+
+  /* Each route mounts fresh, so its blocks rise in one after another. */
+  .native-club .club-main>*>*{animation:m-rise .6s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--m,0)*70ms)}
+  .native-club .club-main>*>:nth-child(2){--m:1}.native-club .club-main>*>:nth-child(3){--m:2}
+  .native-club .club-main>*>:nth-child(4){--m:3}.native-club .club-main>*>:nth-child(5){--m:4}
+  .native-club .club-main>*>:nth-child(6){--m:5}.native-club .club-main>*>:nth-child(n+7){--m:6}
+  .app-command-grid>*,.app-lower-grid>*{animation:m-rise .6s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--m,0)*70ms + var(--n,0)*90ms)}
+  .app-command-grid>:nth-child(2),.app-lower-grid>:nth-child(2){--n:1}
+  .club-pulse>*{animation:m-pop .5s cubic-bezier(.2,.9,.3,1.25) backwards;animation-delay:calc(180ms + var(--k,0)*60ms)}
+  .club-pulse>:nth-child(2){--k:1}.club-pulse>:nth-child(3){--k:2}.club-pulse>:nth-child(4){--k:3}
+  /* List rows cascade in. */
+  .session-line,.mate-row,.crew-row,.profile-row{animation:m-slide .5s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(220ms + min(var(--r,0),8)*45ms)}
+  :is(.session-line,.mate-row,.crew-row,.profile-row):nth-of-type(2){--r:1}:is(.session-line,.mate-row,.crew-row,.profile-row):nth-of-type(3){--r:2}
+  :is(.session-line,.mate-row,.crew-row,.profile-row):nth-of-type(4){--r:3}:is(.session-line,.mate-row,.crew-row,.profile-row):nth-of-type(5){--r:4}
+  :is(.session-line,.mate-row,.crew-row,.profile-row):nth-of-type(6){--r:5}:is(.session-line,.mate-row,.crew-row,.profile-row):nth-of-type(n+7){--r:6}
+
+  /* Sheets glide up from the bottom edge, the backdrop fades. */
+  .tool-sheet{animation:m-sheet .5s cubic-bezier(.2,.9,.2,1)}
+  .tool-backdrop::before{animation:m-fade .35s ease}
+
+  /* Dock: the newly active tab gives a small hop. */
+  .bottom-dock button.active .dock-icon>svg{animation:m-hop .5s cubic-bezier(.3,1.5,.5,1)}
+}
+
+/* Touch feedback: everything tappable gives way under the finger. */
+@media(hover:none){
+  .club-app button:not(:disabled),.club-app .session-line,.club-app label.period-select{transition:scale .2s cubic-bezier(.2,.8,.2,1),background-color .25s,color .25s,box-shadow .25s,border-color .25s,opacity .25s}
+  .club-app button:not(:disabled):active,.club-app .session-line:active{scale:.965;transition-duration:.08s}
+  .bottom-dock>button:hover{transform:none;background:none}
+  .bottom-dock>button.active:hover{background:#e9f0fe}
+}
+
+/* Install hint on phones: a slim dismissible pill above the dock instead of a button in the header. */
+@media(max-width:767px){
+  #install-bar{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:620;display:flex;align-items:center;gap:2px;padding:4px 4px 4px 6px;border-radius:999px;background:#ffffffe6;border:1px solid #dce5f5;box-shadow:0 10px 30px #31507e1f;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);animation:m-pill .6s 1.4s cubic-bezier(.2,.9,.3,1.2) backwards}
+  #install-bar[hidden],body:has(.tool-backdrop) #install-bar,body:has(.route-welcome) #install-bar{display:none}
+  #install-bar .install-app{position:static!important;display:block!important;border:0;background:none;box-shadow:none;color:#345deb;font-size:12px;font-weight:600;padding:8px 10px;border-radius:999px}
+  #install-dismiss{width:30px;height:30px;border:0;border-radius:50%;background:#eef2fa;color:#8b95aa;font-size:15px;line-height:1}
+}
+@media(min-width:768px){#install-dismiss{display:none}}
+
+@keyframes m-rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes m-slide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+@keyframes m-pop{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:none}}
+@keyframes m-sheet{from{opacity:.4;transform:translateY(60px)}to{opacity:1;transform:none}}
+@keyframes m-fade{from{opacity:0}to{opacity:1}}
+@keyframes m-hop{0%{transform:translateY(0)}45%{transform:translateY(-6px) scale(1.12)}100%{transform:translateY(-2px)}}
+@keyframes m-pill{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translateX(-50%)}}
+
+@media(prefers-reduced-motion:reduce){
+  .native-club .club-main>*>*,.app-command-grid>*,.app-lower-grid>*,.club-pulse>*,.session-line,.mate-row,.crew-row,.profile-row,.tool-sheet,.tool-backdrop::before,.bottom-dock button.active .dock-icon>svg,#install-bar{animation:none!important}
+}

@@ -1,0 +1,34 @@
+/* Boot screen: two chip stacks riffle into one and split again until the club data is there. */
+#boot-loader{position:fixed;inset:0;z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;background:radial-gradient(120% 80% at 50% 0%,#fff 0%,#f2f4f8 55%,#e9eef8 100%);transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+#boot-loader.done{opacity:0;transform:scale(1.04);pointer-events:none}
+#boot-loader .boot-mark{width:58px;height:58px;animation:boot-breathe 2.4s ease-in-out infinite}
+#boot-loader .boot-table{position:relative;width:190px;height:120px}
+#boot-loader .boot-table::after{content:"";position:absolute;left:50%;bottom:10px;width:170px;height:16px;margin-left:-85px;border-radius:50%;background:radial-gradient(closest-side,#1d2b4f2e,#1d2b4f00);animation:boot-shadow 2.4s cubic-bezier(.65,0,.35,1) infinite}
+#boot-loader .chip{--step:11px;position:absolute;left:50%;bottom:20px;width:68px;height:13px;margin-left:-34px;border-radius:6px;z-index:var(--z);
+  background:linear-gradient(180deg,#ffffff38 0 30%,#ffffff00 31% 70%,#00000024 71%),repeating-linear-gradient(90deg,var(--face) 0 11px,var(--edge) 11px 16px);background-position:0 0,var(--off,0) 0;
+  box-shadow:0 1px 0 #1d2b4f40,0 2px 4px #1d2b4f1f;
+  transform:translate(var(--sx),var(--sy));animation:boot-riffle 2.4s cubic-bezier(.65,0,.35,1) infinite;animation-delay:calc(var(--z)*45ms)}
+#boot-loader .m1,#boot-loader .m4{--off:6px}#boot-loader .m2,#boot-loader .m5{--off:11px}
+#boot-loader .chip.navy{--face:#1d2b4f;--edge:#f4f6fb}
+#boot-loader .chip.blue{--face:#345deb;--edge:#f4f6fb}
+#boot-loader .chip.ivory{--face:#fbfcff;--edge:#345deb;box-shadow:0 0 0 1px #d6def0,0 1px 0 #1d2b4f26,0 2px 4px #1d2b4f14}
+/* Left stack chips sit on merged levels 0/2/4, right stack chips on 1/3/5. */
+#boot-loader .l{--sx:-44px;--tilt:9deg}
+#boot-loader .r{--sx:44px;--tilt:-9deg}
+#boot-loader .s0{--sy:0px}#boot-loader .s1{--sy:calc(var(--step)*-1)}#boot-loader .s2{--sy:calc(var(--step)*-2)}
+#boot-loader .m0{--z:0;--my:0px}#boot-loader .m1{--z:1;--my:calc(var(--step)*-1)}#boot-loader .m2{--z:2;--my:calc(var(--step)*-2)}
+#boot-loader .m3{--z:3;--my:calc(var(--step)*-3)}#boot-loader .m4{--z:4;--my:calc(var(--step)*-4)}#boot-loader .m5{--z:5;--my:calc(var(--step)*-5)}
+#boot-loader .boot-label{font:600 11px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#8b95aa}
+#boot-loader .boot-label i{display:inline-block;width:.6em;text-align:left;font-style:normal;animation:boot-dots 1.2s steps(4) infinite;overflow:hidden;vertical-align:bottom;white-space:nowrap}
+@keyframes boot-riffle{
+  0%,8%{transform:translate(var(--sx),var(--sy)) rotate(0)}
+  22%{transform:translate(calc(var(--sx)*.42),calc(var(--sy) - 7px)) rotate(var(--tilt))}
+  36%,60%{transform:translate(0,var(--my)) rotate(0)}
+  74%{transform:translate(calc(var(--sx)*.42),calc(var(--my) - 5px)) rotate(var(--tilt))}
+  88%,100%{transform:translate(var(--sx),var(--sy)) rotate(0)}}
+@keyframes boot-shadow{0%,8%,88%,100%{transform:scaleX(1)}36%,60%{transform:scaleX(.55)}}
+@keyframes boot-breathe{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(-3px);opacity:.82}}
+@keyframes boot-dots{from{width:0}to{width:1.2em}}
+@media(prefers-reduced-motion:reduce){
+  #boot-loader .chip{animation:none;transform:translate(0,var(--my))}
+  #boot-loader .boot-mark,#boot-loader .boot-table::after,#boot-loader .boot-label i{animation:none}}

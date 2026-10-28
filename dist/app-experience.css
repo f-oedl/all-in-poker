@@ -57,3 +57,8 @@
 @media(prefers-reduced-motion:reduce){.archive-filter-sheet{animation:none}}
 /* Fixed sheets must use the viewport, not the animated page's containing block. */
 .route-archive:has(.archive-filter-backdrop) .club-main{animation:none!important;transform:none!important;position:relative;z-index:950}
+
+/* The blur lives on a non-scrolling layer: backdrop-filter on the scrolling backdrop itself made it
+   the containing block for position:fixed dialogs inside it, which then scrolled off-screen. */
+.tool-backdrop{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+.tool-backdrop::before{content:"";position:fixed;inset:0;z-index:-1;background:#253c5f4d;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);pointer-events:none}

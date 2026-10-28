@@ -20,3 +20,7 @@ Generated with the built-in image tool, then resized for web and install icons. 
 
 ## Mobile evening filters
 Bottom sheet combines year, month, date range, player participation and sort order. Summaries and CSV use the complete matching evenings, retaining every participant. No backend mutations. Browser checks at 390×844 covered combined player/month/oldest ordering, date input, empty month and resetting to the current year.
+
+## Ladebildschirm und Handy-Animationen
+`loader.css`/`loader.js`: Startbildschirm mit zwei Chip-Stapeln, die sich ineinander mischen und wieder teilen. Er erscheint direkt mit dem HTML, bleibt mindestens eine Mischrunde (1,1 s) sichtbar und blendet aus, sobald Inhalt, Willkommensseite oder Fehleransicht da ist (spätestens nach 15 s).
+`mobile.css`/`mobile.js` (bis 767 px): gestaffelter Aufbau jeder Seite, Listen-Kaskade, Antipp-Feedback, Glas-Kopfzeile beim Scrollen, Fenster gleiten von unten hoch, Navigations-Icon hüpft, Installationshinweis als wegklickbare Pille über der Navigation. Animationen behalten danach keinen `transform`, damit feste Dialoge im Bild bleiben. „Bewegung reduzieren“ schaltet alles ab.
